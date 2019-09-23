@@ -33,6 +33,14 @@ void quick_turnL(){
   analogWrite(ML_B, 255);
 }
 
+
+void stop(){
+  analogWrite(MR_F, 0);
+  analogWrite(MR_B, 0);
+  analogWrite(ML_F, 0);
+  analogWrite(ML_B, 0);
+}
+
 void setup() {
   pinMode(MR_F,OUTPUT);
   pinMode(MR_B,OUTPUT);
@@ -51,6 +59,15 @@ void loop() {
     }
     if(val == 'B'){
       backward();
+    }
+    if(val == 'S'){
+      stop();
+    }
+    if(val == 'L'){
+      quick_turnL();
+    }
+    if(val == 'R'){
+      quick_turnR();
     }
   }
 }
