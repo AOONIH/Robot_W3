@@ -4,15 +4,15 @@ from picamera import PiCamera
 import time
 
 camera = PiCamera() # PiCamera object
-camera.resolution = (640, 480)
-camera.framerate = 32
-frame = PiRGBArray(camera) # PiRGBArray object
+camera.resolution = (1280 , 480)
+camera.framerate = 30
+buffer = PiRGBArray(camera) # PiRGBArray object
 time.sleep(0.1) # 100ms
 
 running = True
 while running:
     # capture frames from the camera
-    for frame in camera.capture_continuous(frame, format="bgr", use_video_port=True):
+    for frame in camera.capture_continuous(buffer, format="bgr", use_video_port=True):
         # store the array attribute of the frame object
         image = frame.array
 
