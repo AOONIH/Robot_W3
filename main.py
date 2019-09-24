@@ -5,7 +5,7 @@ import cv2
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
-import numpy as np
+import serial
 
 from find_ball import find_red, find_blue, find_green
 
@@ -22,6 +22,8 @@ buffer = PiRGBArray(camera)  # PiRGBArray object
 time.sleep(0.1)  # 100ms
 
 running = True
+con = serial.Serial("/dev/ttyACM0", 9600)
+con.write(b"I")
 while running:
     for stream in camera.capture_continuous(buffer, format="bgr", use_video_port=True):
 
@@ -32,6 +34,7 @@ while running:
         red_center = find_red(hsv)
         blue_center = find_blue(hsv)
         green_center = find_green(hsv)
+
 
         if not args.novideo:
             if red_center:
