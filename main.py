@@ -6,6 +6,7 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
 import serial
+from control import control_motor
 
 from find_ball import find_red, find_blue, find_green
 
@@ -34,7 +35,7 @@ while running:
         red_center = find_red(hsv)
         blue_center = find_blue(hsv)
         green_center = find_green(hsv)
-
+        control_motor(con, green_center, red_center, window_size)
 
         if not args.novideo:
             if red_center:
@@ -44,7 +45,7 @@ while running:
             if green_center:
                 cv2.circle(frame, green_center, 5, (0, 255, 0), -1)
             cv2.imshow("Frame", frame)
-        
+
         stream.truncate(0)
         key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):

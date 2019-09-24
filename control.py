@@ -1,4 +1,3 @@
-
 def control_motor(con, red_center, green_center, window_size):
     #only chase green
     if green_center is None:
