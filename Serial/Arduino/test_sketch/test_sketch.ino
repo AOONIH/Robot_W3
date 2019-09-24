@@ -34,7 +34,7 @@ void quick_turnL(){
 }
 
 
-void stop(){
+void stopCar(){
   analogWrite(MR_F, 0);
   analogWrite(MR_B, 0);
   analogWrite(ML_F, 0);
@@ -61,7 +61,7 @@ void loop() {
       backward();
     }
     if(val == 'S'){
-      stop();
+      stopCar();
     }
     if(val == 'L'){
       quick_turnL();
