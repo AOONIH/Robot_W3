@@ -5,7 +5,7 @@ greenLower = (29, 86, 6)
 greenUpper = (64, 255, 255)
 redLower = (170, 86, 6)
 redUpper = (180, 255, 255)
-blueLower = (110, 86, 6)
+blueLower = (110, 30, 6)
 blueUpper = (130, 255, 255)
 
 def find_red(hsv):
@@ -13,7 +13,6 @@ def find_red(hsv):
 
 def find_blue(hsv):
     return find_ball(hsv, blueLower, blueUpper)
-
 
 def find_green(hsv):
     return find_ball(hsv, greenLower, greenUpper)
