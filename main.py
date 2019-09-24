@@ -35,7 +35,7 @@ while running:
         red_center = find_red(hsv)
         blue_center = find_blue(hsv)
         green_center = find_green(hsv)
-        control_motor(con, green_center, red_center, window_size)
+        control_motor(con, red_center, green_center, window_size)
 
         if not args.novideo:
             if red_center:
