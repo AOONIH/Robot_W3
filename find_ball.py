@@ -1,11 +1,11 @@
 import cv2
 import imutils
 
-greenLower = (29, 86, 6)
+greenLower = (29, 86, 50)
 greenUpper = (64, 255, 255)
-redLower = (170, 86, 6)
+redLower = (170, 86, 50)
 redUpper = (180, 255, 255)
-blueLower = (110, 30, 6)
+blueLower = (110, 30, 50)
 blueUpper = (130, 255, 255)
 
 def find_red(hsv):
