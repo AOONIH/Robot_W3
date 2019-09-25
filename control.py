@@ -23,11 +23,11 @@ class Controller:
         if radius is None:
             radius = 0.0
 
-        if (not self.captures) and radius > self.window_width*0.5:
+        if (not self.captures) and radius > self.window_width*0.4:
             self.captures = True
             logger.critical("balloon captured")
 
-        if self.captures and radius < self.window_width*0.5:
+        if self.captures and radius < self.window_width*0.1:
             # poped
             self.captures = False
             self.green_pop_count += 1
