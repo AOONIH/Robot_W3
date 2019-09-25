@@ -84,10 +84,10 @@ void quick_turnL(){
 void avoid(bool left_approach, bool right_approach){
   if(left_approach and !right_approach){
     quick_turnR();
-    delay(200);
+    delay(500);
   }else if(!left_approach and right_approach){
     quick_turnL();
-    delay(200);
+    delay(500);
   }else if(left_approach and right_approach){    
     backward();
     delay(700);
@@ -167,7 +167,6 @@ void loop() {
         time_LED_toggled = millis();
       }
     }
-    if(distL > D_close_threshold and distR > D_close_threshold){
       switch (last_signal){
       case 'F':
         forward();
@@ -179,9 +178,7 @@ void loop() {
         quick_turnR();
         break;
       }
-    }else{
-      avoid(distL < D_close_threshold, distR < D_close_threshold);
-    }
+    
   }
   delay(10);
 }

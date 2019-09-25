@@ -31,6 +31,6 @@ def find_ball(hsv, lower_color, upper_color):
         M = cv2.moments(c)
         centre = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
         if radius > 10:
-            return centre
+            return centre, radius
         else:
-            return None
+            return None, None
