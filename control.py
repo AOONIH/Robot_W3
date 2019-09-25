@@ -16,7 +16,7 @@ class Controller:
 
     def control(self, con, center_info):
         self.control_motor(con, center_info[self.key])
-        if self.key == "green":
+        if self.key == "green" and center_info["green"][1] is not None:
             self.pop_detection(con, center_info["green"][1])
 
     def pop_detection(self, con, radius):
