@@ -1,2 +1,5 @@
 Serial/.mypy_cache
 .mypy_cache
+config.json
+logs
+*.pyc
