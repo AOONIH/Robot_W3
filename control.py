@@ -31,7 +31,7 @@ class Controller:
             logger.critical("balloon poped")
 
     def control_motor(self, con, center):
-        if center is None:
+        if center[0] is None:
             con.write(b"S")
             return False
         elif center[0] < self.window_width * 0.3:
