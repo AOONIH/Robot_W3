@@ -34,3 +34,4 @@ def find_ball(hsv, lower_color, upper_color):
             return centre, radius
         else:
             return None, None
+    return None, None
