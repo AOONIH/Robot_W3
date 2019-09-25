@@ -14,6 +14,7 @@ class Controller:
         self.captures = False
         self.green_pop_count = 0
         self.pop_until = None
+        self.recent_pop = 0
         self.key = "green"
 
     def control(self, con, center_info):
@@ -37,11 +38,15 @@ class Controller:
             # poped
             self.captures = False
             self.green_pop_count += 1
+            self.recent_pop = time.time()
             logger.critical("balloon poped")
 
     def control_motor(self, con, center):
         if center is None:
-            con.write(b"S")
+            if(self.recent_pop + 10 < time.time()):
+                con.write(b"S")
+            else:
+                con.write(b"R")
             return False
         elif center[0] < self.window_width * 0.3:
             con.write(b"L")
