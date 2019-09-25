@@ -84,10 +84,10 @@ void quick_turnL(){
 void avoid(bool left_approach, bool right_approach){
   if(left_approach and !right_approach){
     quick_turnR();
-    delay(500);
+    delay(1000);
   }else if(!left_approach and right_approach){
     quick_turnL();
-    delay(500);
+    delay(1000);
   }else if(left_approach and right_approach){    
     backward();
     delay(700);
@@ -99,7 +99,7 @@ void avoid(bool left_approach, bool right_approach){
 void explore(unsigned long time){
   if(time > explore_travel_until){
     explore_travel_until = time + 500*random(1, 6);
-    int turn_length = 10*random(1, 10);
+    int turn_length = 100*random(1, 10);
     int direction = random(0, 2);
     if(direction == 0){
       quick_turnL();
