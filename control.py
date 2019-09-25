@@ -15,7 +15,7 @@ class Controller:
         self.key = "green"
 
     def control(self, con, center_info):
-        self.control_motor(con, center_info[self.key])
+        self.control_motor(con, center_info[self.key][0])
         if self.key == "green" and center_info["green"][1] is not None:
             self.pop_detection(con, center_info["green"][1])
 
@@ -31,7 +31,7 @@ class Controller:
             logger.critical("balloon poped")
 
     def control_motor(self, con, center):
-        if center[0] is None:
+        if center is None:
             con.write(b"S")
             return False
         elif center[0] < self.window_width * 0.3:
