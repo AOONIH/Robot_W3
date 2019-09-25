@@ -25,6 +25,7 @@ time.sleep(0.1)  # 100ms
 running = True
 con = serial.Serial("/dev/ttyACM0", 9600)
 con.write(b"I")
+print("started")
 while running:
     for stream in camera.capture_continuous(buffer, format="bgr", use_video_port=True):
 
