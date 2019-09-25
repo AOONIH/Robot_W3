@@ -22,6 +22,7 @@ class Controller:
     def pop_detection(self, con, radius):
         if (not self.captures) and radius > self.window_width*0.5:
             self.captures = True
+            logger.critical("balloon captured")
 
         if self.captures and radius < self.window_width*0.5:
             # poped
