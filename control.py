@@ -16,10 +16,13 @@ class Controller:
 
     def control(self, con, center_info):
         self.control_motor(con, center_info[self.key][0])
-        if self.key == "green" and center_info["green"][1] is not None:
+        if self.key == "green":
             self.pop_detection(con, center_info["green"][1])
 
     def pop_detection(self, con, radius):
+        if radius is None:
+            radius = 0.0
+
         if (not self.captures) and radius > self.window_width*0.5:
             self.captures = True
             logger.critical("balloon captured")
