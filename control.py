@@ -1,5 +1,6 @@
 from collections import deque
 import logging
+import time
 
 logger = logging.getLogger()
 
@@ -12,6 +13,7 @@ class Controller:
         self.window_width = window_width
         self.captures = False
         self.green_pop_count = 0
+        self.pop_until = None
         self.key = "green"
 
     def control(self, con, center_info):
@@ -23,8 +25,12 @@ class Controller:
         if radius is None:
             radius = 0.0
 
+        if (self.pop_until is not None and self.pop_until > time.time()):
+            self.captures = False
+
         if (not self.captures) and radius > self.window_width*0.4:
             self.captures = True
+            self.pop_until = time.time() + 3
             logger.critical("balloon captured")
 
         if self.captures and radius < self.window_width*0.1:

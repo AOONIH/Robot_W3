@@ -23,6 +23,7 @@ int sample_lum     = 1;
 unsigned long explore_travel_until = 0;
 int explore_state  = 1;
 int init_flg = 0;
+char explore_movement = 'F';
 unsigned long time_LED_toggled = 0;
 
 int background;
@@ -98,17 +99,25 @@ void avoid(bool left_approach, bool right_approach){
 
 void explore(unsigned long time){
   if(time > explore_travel_until){
-    explore_travel_until = time + 500*random(1, 6);
-    int turn_length = 100*random(1, 10);
-    int direction = random(0, 2);
-    if(direction == 0){
-      quick_turnL();
+    if(explore_movement == 'F'){
+      explore_travel_until = time + 300*random(1, 10);
+      int tmp = random(0,2);
+      if(tmp == 0){
+        explore_movement = 'L';
+      }else{
+        explore_movement = 'R';
+      }
     }else{
-      quick_turnR();
+      explore_travel_until = time + 500*random(1, 10);
+      explore_movement = 'F';
     }
-    delay(turn_length);
-  }else{
+  }
+  if(explore_movement == 'F'){
     forward();
+  }else if(explore_movement == 'L'){
+    quick_turnL();
+  }else{
+    quick_turnR();
   }
 }
 
