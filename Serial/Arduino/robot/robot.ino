@@ -160,9 +160,11 @@ void loop() {
     return;
   }
   if(val == 'S'){
-    explore_state = 1;
-    explore_movement = 'S';
-    explore_travel_until = millis() + 4000;
+    if(explore_state == 0){
+      explore_state = 1;
+      explore_movement = 'S';
+      explore_travel_until = millis() + 4000;
+    }
   }else if(val == 'F' or val == 'L' or val == 'R'){
     explore_state = 0;
     last_signal = val;

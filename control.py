@@ -4,6 +4,7 @@ import time
 
 logger = logging.getLogger()
 
+
 class Controller:
 
     def __init__(self, num_green, window_width):
@@ -16,6 +17,8 @@ class Controller:
         self.pop_until = 0
         self.recent_pop = 0
         self.key = "green"
+        self.detected = False
+        self.serching_count = 0
 
     def control(self, con, center_info):
         self.control_motor(con, center_info[self.key][0])
@@ -31,7 +34,7 @@ class Controller:
             self.captures = True
             self.pop_until = 10
             logger.critical("balloon captured")
-        
+
         if (self.pop_until > 0):
             self.pop_until -= 1
             if self.pop_until == 0:
@@ -42,18 +45,30 @@ class Controller:
             self.captures = False
             self.green_pop_count += 1
             self.recent_pop = 30
+            self.detected = False
             logger.critical("balloon poped")
 
     def control_motor(self, con, center):
-        if center is None:
+        center_threshold = 0.3 * (1.1 ** self.serching_count) 
+        if center is None and (not self.detected):
             con.write(b"S")
-            return False
-        elif center[0] < self.window_width * 0.3:
+        elif center is None and self.detected:
+            # reverse last action
+            # inc width 10%
+            self.serching_count += 1
+        elif center[0] < self.window_width * (0.5 - center_threshold/2):
             con.write(b"L")
-            return False
-        elif center[0] > self.window_width * 0.7:
+            self.detected = True
+            self.serching_count = 0
+        elif center[0] > self.window_width * (0.5 + center_threshold/2):
             con.write(b"R")
-            return False
+            self.detected = True
+            self.serching_count = 0
         else:
             con.write(b"F")
-            return True
+            self.detected = True
+            self.serching_count = 0
+
+        if self.serching_count > 7:
+            self.serching_count = 0
+            self.detected = False
