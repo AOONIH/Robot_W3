@@ -23,7 +23,6 @@ int sample_lum     = 1;
 unsigned long explore_travel_until = 0;
 int explore_state  = 1;
 int init_flg = 0;
-char explore_movement = 'F';
 unsigned long time_LED_toggled = 0;
 
 int background;
@@ -99,25 +98,17 @@ void avoid(bool left_approach, bool right_approach){
 
 void explore(unsigned long time){
   if(time > explore_travel_until){
-    if(explore_movement == 'F'){
-      explore_travel_until = time + 300*random(1, 10);
-      int tmp = random(0,2);
-      if(tmp == 0){
-        explore_movement = 'L';
-      }else{
-        explore_movement = 'R';
-      }
+    explore_travel_until = time + 500*random(1, 6);
+    int turn_length = 100*random(1, 10);
+    int direction = random(0, 2);
+    if(direction == 0){
+      quick_turnL();
     }else{
-      explore_travel_until = time + 500*random(1, 10);
-      explore_movement = 'F';
+      quick_turnR();
     }
-  }
-  if(explore_movement == 'F'){
-    forward();
-  }else if(explore_movement == 'L'){
-    quick_turnL();
+    delay(turn_length);
   }else{
-    quick_turnR();
+    forward();
   }
 }
 
@@ -140,9 +131,6 @@ void loop() {
   unsigned long distL = distanceL();
   unsigned long distR = distanceR();
   unsigned long time = millis();
-  //Serial.println(distL);
-  //Serial.println(distR);
-  //delay(100);
   char val;
   char last_signal;
   if (Serial.available() > 0){
@@ -189,11 +177,6 @@ void loop() {
       case 'R':
         quick_turnR();
         break;
-      case 'E':
-        analogWrite(MR_F, 0);
-        analogWrite(MR_B, 0);
-        analogWrite(ML_F, 0);
-        analogWrite(ML_B, 0);
       }
     
   }

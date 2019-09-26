@@ -140,9 +140,6 @@ void loop() {
   unsigned long distL = distanceL();
   unsigned long distR = distanceR();
   unsigned long time = millis();
-  //Serial.println(distL);
-  //Serial.println(distR);
-  //delay(100);
   char val;
   char last_signal;
   if (Serial.available() > 0){
@@ -189,11 +186,6 @@ void loop() {
       case 'R':
         quick_turnR();
         break;
-      case 'E':
-        analogWrite(MR_F, 0);
-        analogWrite(MR_B, 0);
-        analogWrite(ML_F, 0);
-        analogWrite(ML_B, 0);
       }
     
   }

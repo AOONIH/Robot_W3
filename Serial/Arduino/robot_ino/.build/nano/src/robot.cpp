@@ -1,3 +1,16 @@
+#include <Arduino.h>
+
+unsigned long distanceL();
+unsigned long distanceR();
+void forward();
+void backward();
+void quick_turnR();
+void quick_turnL();
+void avoid(bool left_approach, bool right_approach);
+void explore(unsigned long time);
+void setup();
+void loop();
+#line 1 "src/robot.ino"
 #define MR_F 6
 #define ML_F 5
 #define ML_B 9
@@ -140,9 +153,6 @@ void loop() {
   unsigned long distL = distanceL();
   unsigned long distR = distanceR();
   unsigned long time = millis();
-  //Serial.println(distL);
-  //Serial.println(distR);
-  //delay(100);
   char val;
   char last_signal;
   if (Serial.available() > 0){
@@ -189,11 +199,6 @@ void loop() {
       case 'R':
         quick_turnR();
         break;
-      case 'E':
-        analogWrite(MR_F, 0);
-        analogWrite(MR_B, 0);
-        analogWrite(ML_F, 0);
-        analogWrite(ML_B, 0);
       }
     
   }

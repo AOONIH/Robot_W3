@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano/src/robot.cpp : src/robot.ino
+	@mkdir -p .build/nano/src
+	@echo [93msrc/robot.ino[0m
+	@/home/pi/.local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano/src/robot.cpp
+	@true
+

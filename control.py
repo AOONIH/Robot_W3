@@ -48,9 +48,10 @@ class Controller:
         if center is None:
             if(self.recent_pop  > 0):
                 self.recent_pop -= 1
-                con.write(b"S")
-            else:
                 con.write(b"R")
+                logger.info("turning")
+            else:
+                con.write(b"S")
             return False
         elif center[0] < self.window_width * 0.3:
             con.write(b"L")
