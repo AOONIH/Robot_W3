@@ -61,14 +61,17 @@ class Controller:
             else:
                 con.write(b"R")
             self.serching_count += 1
+            logger.info("enter reverse")
         elif center[0] + 0.5 * radius < self.window_width * (0.5 - center_threshold/2):
             con.write(b"L")
             self.detected = True
             self.serching_count = 0
+            self.last_turn = "L"
         elif center[0] - 0.5 * radius > self.window_width * (0.5 + center_threshold/2):
             con.write(b"R")
             self.detected = True
             self.serching_count = 0
+            self.last_turn = "R"
         else:
             con.write(b"F")
             self.detected = True

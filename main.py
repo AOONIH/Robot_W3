@@ -71,4 +71,5 @@ while running:
             break
 
     running = False
+    
 cv2.destroyAllWindows()
