@@ -19,6 +19,7 @@ class Controller:
         self.key = "green"
         self.detected = False
         self.serching_count = 0
+        self.last_turn = "R"
 
     def control(self, con, center_info):
         self.control_motor(con, center_info[self.key][0])
@@ -55,8 +56,10 @@ class Controller:
         if center is None and (not self.detected):
             con.write(b"S")
         elif center is None and self.detected:
-            # reverse last action
-            # inc width 10%
+            if self.last_turn == "R":
+                con.write(b"L")
+            else:
+                con.write(b"R")
             self.serching_count += 1
         elif center[0] < self.window_width * (0.5 - center_threshold/2):
             con.write(b"L")
