@@ -164,7 +164,7 @@ void loop() {
   if(val == 'S'){
     if(explore_state == 0){
        explore_state = 1;
-       explore_movement = 'S';
+       explore_movement = 'R';
        explore_travel_until = millis() + 6000;
     }
   }else if(val == 'F' or val == 'L' or val == 'R'){
