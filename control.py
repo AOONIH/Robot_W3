@@ -46,7 +46,7 @@ class Controller:
             self.captures = False
             self.green_pop_count += 1
             self.detected = False
-            logger.critical("balloon poped")
+            logger.critical("%d-th balloon poped"%self.green_pop_count)
 
         if self.green_pop_count == self.num_green:
             self.key = "red"
@@ -56,12 +56,15 @@ class Controller:
         if center is None and (not self.detected):
             con.write(b"S")
         elif center is None and self.detected:
+            logger.info("enter reverse")
             if self.last_turn == "R":
                 con.write(b"L")
+                logger.info("L")
             else:
                 con.write(b"R")
+                logger.info("R")
             self.serching_count += 1
-            logger.info("enter reverse")
+            
         elif center[0] + 0.25 * radius < self.window_width * (0.5 - center_threshold/2):
             con.write(b"L")
             self.detected = True
