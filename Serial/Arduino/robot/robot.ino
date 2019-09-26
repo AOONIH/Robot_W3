@@ -69,27 +69,29 @@ void backward(){
   analogWrite(ML_B, 255);
 }
 
-void quick_turnR(){
+void quick_turnR(int speed = 255){
   analogWrite(MR_F, 0);
-  analogWrite(MR_B, 255);
-  analogWrite(ML_F, 255);
+  analogWrite(MR_B, speed);
+  analogWrite(ML_F, speed);
   analogWrite(ML_B, 0);
 }
 
-void quick_turnL(){
-  analogWrite(MR_F, 255);
+void quick_turnL(int speed = 255){
+  analogWrite(MR_F, speed);
   analogWrite(MR_B, 0);
   analogWrite(ML_F, 0);
-  analogWrite(ML_B, 255);
+  analogWrite(ML_B, speed);
 }
 
 
 void avoid(bool left_approach, bool right_approach){
   if(left_approach and !right_approach){
     quick_turnR();
+    if(explore_movement == 'L') explore_movement = 'R';
     delay(1000);
   }else if(!left_approach and right_approach){
     quick_turnL();
+    if(explore_movement == 'R') explore_movement = 'L';
     delay(1000);
   }else if(left_approach and right_approach){    
     backward();
@@ -160,9 +162,11 @@ void loop() {
     return;
   }
   if(val == 'S'){
-    explore_state = 1;
-    explore_movement = 'S';
-    explore_travel_until = millis() + 4000;
+    if(explore_state == 0){
+       explore_state = 1;
+       explore_movement = 'S';
+       explore_travel_until = millis() + 6000;
+    }
   }else if(val == 'F' or val == 'L' or val == 'R'){
     explore_state = 0;
     last_signal = val;
@@ -190,18 +194,20 @@ void loop() {
         forward();
         break;
       case 'L':
-        quick_turnL();
+        quick_turnL(255);
         break;
       case 'R':
-        quick_turnR();
+        quick_turnR(255);
         break;
       case 'E':
         analogWrite(MR_F, 0);
         analogWrite(MR_B, 0);
         analogWrite(ML_F, 0);
         analogWrite(ML_B, 0);
+        break;
       }
     
   }
+  Serial.println(explore_travel_until);
   delay(10);
 }

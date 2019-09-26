@@ -41,8 +41,10 @@ class Controller:
             # poped
             self.captures = False
             self.green_pop_count += 1
-            self.recent_pop = 30
             logger.critical("balloon poped")
+
+        if self.green_pop_count == self.num_green:
+            self.key = "red"
 
     def control_motor(self, con, center):
         if center is None:
