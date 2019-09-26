@@ -24,6 +24,7 @@ unsigned long explore_travel_until = 0;
 int explore_state  = 1;
 int init_flg = 0;
 char explore_movement = 'F';
+unsigned long sweep_until = 0;
 unsigned long time_LED_toggled = 0;
 
 int background;
@@ -82,6 +83,7 @@ void quick_turnL(){
   analogWrite(ML_B, 255);
 }
 
+
 void avoid(bool left_approach, bool right_approach){
   if(left_approach and !right_approach){
     quick_turnR();
@@ -112,7 +114,9 @@ void explore(unsigned long time){
       explore_movement = 'F';
     }
   }
-  if(explore_movement == 'F'){
+  if(explore_movement == 'S'){
+    quick_turnR();
+  }else if(explore_movement == 'F'){
     forward();
   }else if(explore_movement == 'L'){
     quick_turnL();
@@ -157,6 +161,8 @@ void loop() {
   }
   if(val == 'S'){
     explore_state = 1;
+    explore_movement = 'S';
+    explore_travel_until = millis() + 4000;
   }else if(val == 'F' or val == 'L' or val == 'R'){
     explore_state = 0;
     last_signal = val;
