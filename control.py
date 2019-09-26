@@ -22,7 +22,7 @@ class Controller:
         self.last_turn = "R"
 
     def control(self, con, center_info):
-        self.control_motor(con, center_info[self.key][0])
+        self.control_motor(con, center_info[self.key][0], center_info[self.key][1])
         if self.key == "green":
             self.pop_detection(con, center_info["green"][1])
 
@@ -51,7 +51,7 @@ class Controller:
         if self.green_pop_count == self.num_green:
             self.key = "red"
 
-    def control_motor(self, con, center):
+    def control_motor(self, con, center, radius):
         center_threshold = 0.3 * (1.1 ** self.serching_count) 
         if center is None and (not self.detected):
             con.write(b"S")
@@ -61,11 +61,11 @@ class Controller:
             else:
                 con.write(b"R")
             self.serching_count += 1
-        elif center[0] < self.window_width * (0.5 - center_threshold/2):
+        elif center[0] + 0.5 * radius < self.window_width * (0.5 - center_threshold/2):
             con.write(b"L")
             self.detected = True
             self.serching_count = 0
-        elif center[0] > self.window_width * (0.5 + center_threshold/2):
+        elif center[0] - 0.5 * radius > self.window_width * (0.5 + center_threshold/2):
             con.write(b"R")
             self.detected = True
             self.serching_count = 0
