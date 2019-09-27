@@ -53,16 +53,14 @@ while running:
         blurred = cv2.GaussianBlur(frame, (11, 11), 0)
         hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
         hsv = hsv[:-100,:,:]
-        red_info = find_red(hsv)
-        green_info = find_green(hsv)
-        centre_info = dict(red=green_info, green=red_info)
+        if(controller.key == "green"):
+            centre_info = find_green(hsv)
+        else:
+            centre_info = find_red(hsv)
         controller.control(con, centre_info)
         
         if not args.novideo:
-            if centre_info["red"][0]:
-                cv2.circle(frame, centre_info["red"][0], 5, (0, 0, 255), -1)
-            if centre_info["green"][0]:
-                cv2.circle(frame, centre_info["green"][0], 5, (0, 255, 0), -1)
+            cv2.circle(frame, centre_info[0], 5, (0, 255, 0), -1)
             cv2.imshow("Frame", frame)
 
         stream.truncate(0)
