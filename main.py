@@ -55,7 +55,7 @@ while running:
         hsv = hsv[:-100,:,:]
         red_info = find_red(hsv)
         green_info = find_green(hsv)
-        centre_info = dict(red=red_info, green=green_info)
+        centre_info = dict(red=green_info, green=red_info)
         controller.control(con, centre_info)
         
         if not args.novideo:
