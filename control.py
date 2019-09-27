@@ -22,9 +22,9 @@ class Controller:
         self.last_turn = "R"
 
     def control(self, con, center_info):
-        self.control_motor(con, center_info[self.key][0], center_info[self.key][1])
+        self.control_motor(con, center_info[0], center_info[1])
         if self.key == "green":
-            self.pop_detection(con, center_info["green"][1])
+            self.pop_detection(con, center_info[1])
 
     def pop_detection(self, con, radius):
 
@@ -64,7 +64,6 @@ class Controller:
                 con.write(b"R")
                 logger.info("R")
             self.serching_count += 1
-            
         elif center[0] + 0.25 * radius < self.window_width * (0.5 - center_threshold/2):
             con.write(b"L")
             self.detected = True
